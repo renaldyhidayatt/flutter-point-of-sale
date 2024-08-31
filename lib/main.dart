@@ -6,6 +6,7 @@ import 'package:flutter_application_1/pages/auth/login.dart';
 import 'package:flutter_application_1/pages/notelist.dart';
 import 'package:flutter_application_1/pages/pointofsale.dart';
 import 'package:flutter_application_1/pages/profile.dart';
+import 'package:flutter_application_1/pages/splashscreen.dart'; // Import splash screen
 
 void main() {
   runApp(MyApp());
@@ -21,9 +22,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: '/', // Splash screen sebagai halaman awal
       routes: {
-        '/': (context) => HelloWorldPage(),
+        '/': (context) => SplashScreen(), 
+        '/home': (context) => HelloWorldPage(),
         '/pos': (context) => PointOfSaleScreen(),
         '/login': (context) => LoginPage(),
         '/register':(context) => RegisterPage(),
