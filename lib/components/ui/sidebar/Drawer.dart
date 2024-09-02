@@ -19,6 +19,7 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
           ),
+          // Non-grouped items
           ListTile(
             leading: const Icon(Icons.dashboard),
             title: const Text('Dashboard'),
@@ -26,12 +27,28 @@ class CustomDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(context, '/');
             },
           ),
-          ListTile(
+          Divider(), // Divider between non-grouped and grouped items
+
+          // Grouped items
+          ExpansionTile(
             leading: const Icon(Icons.folder),
             title: const Text('Projects'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, '/projects');
-            },
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.add),
+                title: const Text('New Project'),
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/projects/new');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.list),
+                title: const Text('Project List'),
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/projects/list');
+                },
+              ),
+            ],
           ),
           ListTile(
             leading: const Icon(Icons.analytics),
@@ -40,7 +57,6 @@ class CustomDrawer extends StatelessWidget {
               Navigator.pushReplacementNamed(context, '/analytics');
             },
           ),
-         
         ],
       ),
     );

@@ -29,6 +29,20 @@ class HelloWorldPage extends StatelessWidget {
               },
               child: const Text('Go to Point of Sale'),
             ),
+             const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/purchase');
+              },
+              child: const Text('Go to Purchase History'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/landingpage');
+              },
+              child: const Text('Go to Landing Page'),
+            ),
             const SizedBox(height: 20),
              ElevatedButton(
               onPressed: () {

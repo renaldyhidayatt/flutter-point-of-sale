@@ -1,363 +1,110 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-class DashboardScreen extends StatefulWidget {
+class LandingPage extends StatelessWidget {
   @override
-  // ignore: library_private_types_in_public_api
-  _DashboardScreenState createState() => _DashboardScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomNavbar(),
+      body: Column(
+        children: [
+          Expanded(child: CustomCarousel()), // Carousel in body
+          // Other body content here
+        ],
+      ),
+      bottomNavigationBar: CustomFooter(), // Footer at the bottom
+    );
+  }
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  bool isSidebarExpanded = false;
-  bool isHovered = false;
+class CustomNavbar extends StatelessWidget implements PreferredSizeWidget {
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = MediaQuery.of(context).size.width < 800;
-
-    return Scaffold(
-      appBar: isMobile
-          ? AppBar(
-              title: const Text('Ecommerce Dashboard'),
-              actions: [
-                _buildNotificationDropdown(),
-                _buildUserDropdown(),
-              ],
-            )
-          : null,
-      drawer: isMobile
-          ? Drawer(
-              child: ListView(
-                children: [
-                  DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1977FC),
-                    ),
-                    child: const Text(
-                      'Menu',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.dashboard),
-                    title: const Text('Dashboard'),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.folder),
-                    title: const Text('Projects'),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.analytics),
-                    title: const Text('Analytics'),
-                    onTap: () {},
-                  ),
-                ],
-              ),
-            )
-          : null,
-      body: Row(
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: IconButton(
+        icon: Icon(Icons.menu, color: Colors.black),
+        onPressed: () {
+          // Add menu open logic here
+        },
+      ),
+      title: Row(
         children: [
-          if (!isMobile)
-            MouseRegion(
-              onEnter: (_) => setState(() => isHovered = true),
-              onExit: (_) => setState(() => isHovered = false),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                width: isSidebarExpanded ? 250 : 70,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1977FC),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                      spreadRadius: isHovered ? 1 : 0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.menu, color: Colors.white),
-                      onPressed: () {
-                        setState(() {
-                          isSidebarExpanded = !isSidebarExpanded;
-                        });
-                      },
-                    ),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          const SizedBox(height: 20),
-                          _buildSidebarItem(Icons.dashboard, "Dashboard"),
-                          const SizedBox(height: 20),
-                          _buildSidebarItem(Icons.folder, "Projects"),
-                          const SizedBox(height: 20),
-                          _buildSidebarItem(Icons.analytics, "Analytics"),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          Expanded(
-            child: Column(
-              children: [
-                if (!isMobile) _buildHeader(),
-                Expanded(
-                  child: _buildContent(context),
-                ),
-                _buildFooter(),
-              ],
-            ),
-          ),
+          Image.network('https://flowbite.com/docs/images/logo.svg', height: 32),
+          SizedBox(width: 8),
+          Text('Flowbite', style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold)),
         ],
       ),
-      bottomNavigationBar: isMobile
-          ? BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.dashboard),
-                  label: 'Dashboard',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.folder),
-                  label: 'Projects',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.analytics),
-                  label: 'Analytics',
-                ),
-              ],
-              onTap: (index) {
-                // Handle tab selection
-              },
-            )
-          : null,
-    );
-  }
-
-  Widget _buildNotificationDropdown() {
-    return PopupMenuButton<int>(
-      icon: const Icon(Icons.notifications, color: Color.fromARGB(255, 37, 37, 37)),
-      itemBuilder: (context) => [
-        PopupMenuItem<int>(
-          value: 0,
-          child: ListTile(
-            leading: const Icon(Icons.message, color: Colors.blue),
-            title: const Text('New comment on your post'),
-            subtitle: const Text('5 mins ago'),
-          ),
+      actions: [
+        TextButton(
+          onPressed: () {},
+          child: Text('Home', style: TextStyle(color: Colors.black)),
         ),
-        PopupMenuItem<int>(
-          value: 1,
-          child: ListTile(
-            leading: const Icon(Icons.person_add, color: Colors.green),
-            title: const Text('New follower'),
-            subtitle: const Text('12 mins ago'),
-          ),
+        TextButton(
+          onPressed: () {},
+          child: Text('About', style: TextStyle(color: Colors.black)),
         ),
-        PopupMenuItem<int>(
-          value: 2,
-          child: ListTile(
-            leading: const Icon(Icons.shopping_cart, color: Colors.orange),
-            title: const Text('Order #1234 confirmed'),
-            subtitle: const Text('30 mins ago'),
-          ),
+        TextButton(
+          onPressed: () {},
+          child: Text('Services', style: TextStyle(color: Colors.black)),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: Text('Pricing', style: TextStyle(color: Colors.black)),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: Text('Contact', style: TextStyle(color: Colors.black)),
         ),
       ],
-      onSelected: (item) {
-        // Handle notification item click
-      },
     );
   }
-
-  Widget _buildUserDropdown() {
-  return PopupMenuButton<int>(
-    icon: const Icon(Icons.account_circle, color: Color.fromARGB(255, 37, 37, 37)),
-    itemBuilder: (context) => [
-      PopupMenuItem<int>(
-        value: 0,
-        child: ListTile(
-          leading: const Icon(Icons.person, color: Color.fromARGB(255, 37, 37, 37)),
-          title: const Text('Profile'),
-        ),
-      ),
-      PopupMenuItem<int>(
-        value: 1,
-        child: ListTile(
-          leading: const Icon(Icons.help, color: Color.fromARGB(255, 37, 37, 37)),
-          title: const Text('Help Center'),
-        ),
-      ),
-      PopupMenuItem<int>(
-        value: 2,
-        child: ListTile(
-          leading: const Icon(Icons.logout, color: Color.fromARGB(255, 37, 37, 37)),
-          title: const Text('Logout'),
-        ),
-      ),
-    ],
-    onSelected: (item) {
-      // Handle user menu item click
-      switch (item) {
-        case 0:
-          // Navigate to Profile
-          break;
-        case 1:
-          // Navigate to Help Center
-          break;
-        case 2:
-          // Handle Logout
-          break;
-      }
-    },
-  );
 }
 
-
-  Widget _buildSidebarItem(IconData icon, String title) {
-    return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setState) {
-        return MouseRegion(
-          onEnter: (_) => setState(() => isHovered = true),
-          onExit: (_) => setState(() => isHovered = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
-              color: isHovered ? Colors.white.withOpacity(0.1) : Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                Icon(icon, color: Colors.white, size: 24),
-                if (isSidebarExpanded) const SizedBox(width: 16),
-                if (isSidebarExpanded)
-                  Text(
-                    title,
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-              ],
-            ),
+class CustomCarousel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 400,
+        autoPlay: true,
+        enlargeCenterPage: true,
+      ),
+      items: [
+        'https://docs.images/carousel/carousel-1.svg',
+        'https://docs/images/carousel/carousel-2.svg',
+        'https://docs/images/carousel/carousel-3.svg',
+        'https://docs/images/carousel/carousel-4.svg',
+        'https://docs/images/carousel/carousel-5.svg'
+      ].map((item) {
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 5.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5.0),
+            child: Image.network(item, fit: BoxFit.cover, width: 1000),
           ),
         );
-      },
+      }).toList(),
     );
   }
+}
 
-  Widget _buildHeader() {
+class CustomFooter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      height: 60,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
+      color: Colors.blueGrey[800],
+      padding: EdgeInsets.all(20.0),
+      child: Column(
         children: [
-          const Text("Ecommerce Dashboard", style: TextStyle(fontSize: 24)),
-          const Spacer(),
-          _buildNotificationDropdown(),
-          const SizedBox(width: 16),
-          _buildUserDropdown(),
+          Text('Flowbite', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+          SizedBox(height: 10),
+          Text('© 2024 All Rights Reserved', style: TextStyle(color: Colors.white70)),
         ],
-      ),
-    );
-  }
-
-  Widget _buildContent(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    int crossAxisCount;
-
-    if (width >= 1200) {
-      // Large Desktop
-      crossAxisCount = 4;
-    } else if (width >= 800) {
-      // Desktop/Tablet
-      crossAxisCount = 2;
-    } else {
-      // Mobile
-      crossAxisCount = 1;
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: GridView.count(
-        crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        children: _buildCards(),
-      ),
-    );
-  }
-
-  List<Widget> _buildCards() {
-    return [
-      _buildCard('Visitors', '\$20,149', 6),
-      _buildCard('Customers', '\$5,834', -12),
-      _buildCard('Orders', '\$3,270', 10),
-      _buildCard('Sales', '\$1.324K', 2),
-    ];
-  }
-
-  Widget _buildCard(String title, String amount, int percentage) {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-            const Spacer(),
-            Text(amount, style: const TextStyle(fontSize: 24)),
-            Row(
-              children: [
-                Icon(
-                  percentage > 0 ? Icons.arrow_upward : Icons.arrow_downward,
-                  color: percentage > 0 ? Colors.green : Colors.red,
-                ),
-                Text(
-                  '$percentage%',
-                  style: TextStyle(
-                    color: percentage > 0 ? Colors.green : Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFooter() {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 5,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: const Center(
-        child: Text("© 2024 Your Company"),
       ),
     );
   }

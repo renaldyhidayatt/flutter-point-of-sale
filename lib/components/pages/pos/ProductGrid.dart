@@ -19,14 +19,38 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int crossAxisCount = 2; // Default for mobile
-    if (isTablet) {
-      crossAxisCount = 2;
-    } else if (isDesktop || isLargeDesktop) {
-      crossAxisCount = 4;
-    }
+    int crossAxisCount;
+    double childAspectRatio;
+    double padding;
+    bool isMobile = MediaQuery.of(context).size.width < 600;
 
-    int itemCount = products.length;
+    // Determine layout based on screen size
+    if (MediaQuery.of(context).size.width < 400) {
+      // Very small mobile layout
+      crossAxisCount = 1;
+      childAspectRatio = 0.85;
+      padding = 8.0;
+    } else if (MediaQuery.of(context).size.width < 600) {
+      // Mobile layout
+      crossAxisCount = 2;
+      childAspectRatio = 0.75;
+      padding = 8.0;
+    } else if (isTablet) {
+      // Tablet layout
+      crossAxisCount = 3;
+      childAspectRatio = 0.7;
+      padding = 16.0;
+    } else if (isDesktop || isLargeDesktop) {
+      // Desktop layout
+      crossAxisCount = 4;
+      childAspectRatio = 0.65;
+      padding = 16.0;
+    } else {
+      // Default fallback
+      crossAxisCount = 2;
+      childAspectRatio = 0.75;
+      padding = 8.0;
+    }
 
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -35,46 +59,82 @@ class ProductGrid extends StatelessWidget {
       child: Scrollbar(
         thumbVisibility: true,
         child: GridView.builder(
+          padding: EdgeInsets.all(padding),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: isTablet ? 0.75 : (isDesktop ? 0.7 : 0.8),
+            crossAxisSpacing: padding,
+            mainAxisSpacing: padding,
+            childAspectRatio: childAspectRatio,
           ),
-          itemCount: itemCount,
+          itemCount: products.length,
           itemBuilder: (context, index) {
             final product = products[index];
-            return Card(
-              elevation: 4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Image.asset(
-                      product['image'],
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
+            return Align(
+              alignment: isMobile ? Alignment.center : Alignment.topLeft,
+              child: SizedBox(
+                width:
+                    isMobile ? MediaQuery.of(context).size.width * 0.9 : null,
+                child: Card(
+                  elevation: 3,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(4)),
+                          child: Image.asset(
+                            product['image'],
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 4.0),
+                        child: Text(
+                          product['name'],
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          maxLines: 1,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Rp.${product['price'].toStringAsFixed(0)}',
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () => addToCart(product),
+                            child: const Text('Add to Cart'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueAccent,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              textStyle: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      product['name'],
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text('\$${product['price'].toStringAsFixed(2)}'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => addToCart(product),
-                      child: Text('Add to Cart'),
-                    ),
-                  ),
-                ],
+                ),
               ),
             );
           },

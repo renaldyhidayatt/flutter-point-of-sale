@@ -42,7 +42,7 @@ class _ContentProfileState extends State<ContentProfile> {
                     child: CircleAvatar(
                       radius: widget.isMobile ? 60 : 80,
                       backgroundImage: _image == null
-                          ? AssetImage('assets/luffy.jpg')
+                          ? const AssetImage('assets/luffy.jpg')
                           : FileImage(File(_image!.path)) as ImageProvider,
                     ),
                   ),

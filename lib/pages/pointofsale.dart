@@ -16,7 +16,7 @@ class _PointOfSaleScreenState extends State<PointOfSaleScreen> {
   bool isSidebarExpanded = false;
   bool isHovered = false;
 
-@override
+  @override
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width < 600;
     bool isTablet = MediaQuery.of(context).size.width >= 600 &&
@@ -35,26 +35,28 @@ class _PointOfSaleScreenState extends State<PointOfSaleScreen> {
               ],
             )
           : null,
-      drawer: isMobile || isTablet
-          ? CustomDrawer()
-          : null,
+      drawer: isMobile || isTablet ? CustomDrawer() : null,
       body: Row(
         children: [
           if (isDesktop || isLargeDesktop)
-           Sidebar(
-            isSidebarExpanded: isSidebarExpanded,
-            onToggle: () {
-              setState(() {
-                isSidebarExpanded = !isSidebarExpanded;
-              });
-            },
-          ),
+            Sidebar(
+              isSidebarExpanded: isSidebarExpanded,
+              onToggle: () {
+                setState(() {
+                  isSidebarExpanded = !isSidebarExpanded;
+                });
+              },
+            ),
           Expanded(
             child: Column(
               children: [
                 if (isDesktop || isLargeDesktop) Header(),
                 Expanded(
-                  child: Content(isTablet: isTablet, isDesktop: isDesktop, isLargeDesktop: isLargeDesktop,),
+                  child: Content(
+                    isTablet: isTablet,
+                    isDesktop: isDesktop,
+                    isLargeDesktop: isLargeDesktop,
+                  ),
                 ),
                 Footer(),
               ],
@@ -63,32 +65,27 @@ class _PointOfSaleScreenState extends State<PointOfSaleScreen> {
         ],
       ),
       bottomNavigationBar: isMobile || isTablet
-        ? BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard, color: Colors.black),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.folder, color: Colors.black),
-                label: 'Projects',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.analytics, color: Colors.black),
-                label: 'Analytics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.payment, color: Colors.black),
-                label: 'POS',
-              ),
-            ],
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.black,
-            onTap: (index) {
-            
-            },
-          )
-        : null,
+          ? BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.shopping_cart),
+                  label: 'Cart',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+              ],
+              currentIndex: 0, // Ubah ini sesuai dengan tab yang aktif
+              onTap: (index) {
+                // Tambahkan logika untuk berpindah tab di sini
+              },
+            )
+          : null,
     );
   }
- }
+}

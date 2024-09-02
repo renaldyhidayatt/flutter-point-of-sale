@@ -4,6 +4,20 @@ class UserDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
+      icon: CircleAvatar(
+        backgroundImage: AssetImage('assets/luffy.jpg'), // Ganti dengan gambar lokal
+        radius: 20, // Sesuaikan ukuran avatar
+        backgroundColor: Colors.transparent, // Menyembunyikan latar belakang default
+        // Gunakan fit untuk mengatur cara gambar ditampilkan di avatar
+        child: ClipOval(
+          child: Image.asset(
+            'assets/luffy.jpg',
+            width: 40, // Sesuaikan lebar gambar
+            height: 40, // Sesuaikan tinggi gambar
+            fit: BoxFit.cover, // Memastikan gambar tidak pecah
+          ),
+        ),
+      ),
       onSelected: (value) {
         _onMenuSelection(value, context);
       },

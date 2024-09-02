@@ -77,27 +77,39 @@ class _ContentNoteListState extends State<ContentNoteList> {
 
   Widget _buildActionButtonImports() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        ElevatedButton.icon(
-          onPressed: _createNoteDialog,
-          icon: Icon(Icons.add),
-          label: Text('Tambah'),
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      ElevatedButton.icon(
+        onPressed: _createNoteDialog,
+        icon: Icon(Icons.add),
+        label: Text('Tambah'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blueAccent, // Warna latar belakang biru
+          foregroundColor: Colors.white, // Warna teks putih
         ),
-        SizedBox(width: 8),
-        ElevatedButton.icon(
-          onPressed: _importNotes,
-          icon: Icon(Icons.file_upload),
-          label: Text('Import'),
+      ),
+      SizedBox(width: 8),
+      ElevatedButton.icon(
+        onPressed: _importNotes,
+        icon: Icon(Icons.file_upload),
+        label: Text('Import'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.black, // Warna latar belakang hitam
+          foregroundColor: Colors.white, // Warna teks putih
         ),
-        SizedBox(width: 8),
-        ElevatedButton.icon(
-          onPressed: _exportNotes,
-          icon: Icon(Icons.file_download),
-          label: Text('Export'),
+      ),
+      SizedBox(width: 8),
+      ElevatedButton.icon(
+        onPressed: _exportNotes,
+        icon: Icon(Icons.file_download),
+        label: Text('Export'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.black, // Warna latar belakang hitam
+          foregroundColor: Colors.white, // Warna teks putih
         ),
-      ],
-    );
+      ),
+    ],
+  );
   }
 
   Widget _buildNoteList(List<Map<String, dynamic>> filteredNotes) {
@@ -105,6 +117,7 @@ class _ContentNoteListState extends State<ContentNoteList> {
       width: double.infinity,
       child: Card(
         elevation: 4,
+        color: Colors.white,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: ConstrainedBox(
@@ -176,12 +189,20 @@ class _ContentNoteListState extends State<ContentNoteList> {
           onPressed: () => _editNoteDialog(index),
           icon: Icon(Icons.edit),
           label: Text('Edit'),
+          style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blueAccent, // Warna latar belakang hitam
+          foregroundColor: Colors.white, // Warna teks putih
+        ),
         ),
         SizedBox(width: _getButtonSpacing()), // Jarak antara tombol
         ElevatedButton.icon(
           onPressed: () => _deleteNote(index),
           icon: Icon(Icons.delete),
           label: Text('Hapus'),
+          style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.red, // Warna latar belakang hitam
+          foregroundColor: Colors.white, // Warna teks putih
+        ),
         ),
       ],
     );
@@ -195,7 +216,7 @@ class _ContentNoteListState extends State<ContentNoteList> {
     } else if (widget.isTablet) {
       return 50.0; // Jarak antar kolom untuk tablet
     } else {
-      return 16.0; // Jarak antar kolom untuk mobile
+      return 10.0; // Jarak antar kolom untuk mobile
     }
   }
 

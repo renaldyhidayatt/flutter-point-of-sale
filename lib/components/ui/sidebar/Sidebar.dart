@@ -4,7 +4,9 @@ class Sidebar extends StatefulWidget {
   final bool isSidebarExpanded;
   final VoidCallback onToggle;
 
-  const Sidebar({Key? key, required this.isSidebarExpanded, required this.onToggle}) : super(key: key);
+  const Sidebar(
+      {Key? key, required this.isSidebarExpanded, required this.onToggle})
+      : super(key: key);
 
   @override
   _SidebarState createState() => _SidebarState();
@@ -13,7 +15,8 @@ class Sidebar extends StatefulWidget {
 class _SidebarState extends State<Sidebar> {
   bool isHovered = false;
 
-  Widget _buildSidebarItem(IconData icon, String title, {bool hasChildren = false}) {
+  Widget _buildSidebarItem(IconData icon, String title,
+      {bool hasChildren = false}) {
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
@@ -59,9 +62,23 @@ class _SidebarState extends State<Sidebar> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          IconButton(
-            icon: Icon(Icons.menu, color: Colors.white),
-            onPressed: widget.onToggle,
+          Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.isSidebarExpanded ? 16 : 8),
+            child: Align(
+              alignment: widget.isSidebarExpanded
+                  ? Alignment.centerLeft
+                  : Alignment.center, // Align based on sidebar state
+              child: IconButton(
+                icon: Icon(
+                  widget.isSidebarExpanded
+                      ? Icons.arrow_back
+                      : Icons.menu,
+                  color: Colors.white,
+                ),
+                onPressed: widget.onToggle,
+              ),
+            ),
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -70,15 +87,18 @@ class _SidebarState extends State<Sidebar> {
                 children: [
                   // Dashboards
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: widget.isSidebarExpanded ? 16 : 8),
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: widget.isSidebarExpanded ? 16 : 8),
                     title: _buildSidebarItem(Icons.pie_chart, 'Dashboards'),
                     onTap: () {
                       Navigator.pushNamed(context, '/dashboard');
                     },
                   ),
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: widget.isSidebarExpanded ? 16 : 8),
-                    title: _buildSidebarItem(Icons.point_of_sale, 'Point Of Sale'),
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: widget.isSidebarExpanded ? 16 : 8),
+                    title:
+                        _buildSidebarItem(Icons.point_of_sale, 'Point Of Sale'),
                     onTap: () {
                       Navigator.pushNamed(context, '/pos');
                     },
@@ -86,7 +106,8 @@ class _SidebarState extends State<Sidebar> {
                   // Projects Group
                   if (widget.isSidebarExpanded)
                     ExpansionTile(
-                      title: _buildSidebarItem(Icons.folder, 'Projects', hasChildren: true),
+                      title: _buildSidebarItem(Icons.folder, 'Projects',
+                          hasChildren: true),
                       children: [
                         ListTile(
                           contentPadding: EdgeInsets.only(left: 40),
