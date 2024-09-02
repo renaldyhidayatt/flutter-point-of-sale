@@ -4,8 +4,9 @@ import 'package:flutter_application_1/components/ui/dropdown/UserNotificationDro
 import 'package:flutter_application_1/components/pages/pos/Content.dart';
 import 'package:flutter_application_1/components/ui/layout/Footer.dart';
 import 'package:flutter_application_1/components/ui/layout/Header.dart';
-import 'package:flutter_application_1/components/ui/sidebar/Drawer.dart';
-import 'package:flutter_application_1/components/ui/sidebar/Sidebar.dart';
+import 'package:flutter_application_1/components/ui/navigation/BottomNavigation.dart';
+import 'package:flutter_application_1/components/ui/navigation/Drawer.dart';
+import 'package:flutter_application_1/components/ui/navigation/Sidebar.dart';
 
 class PointOfSaleScreen extends StatefulWidget {
   @override
@@ -65,26 +66,7 @@ class _PointOfSaleScreenState extends State<PointOfSaleScreen> {
         ],
       ),
       bottomNavigationBar: isMobile || isTablet
-          ? BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart),
-                  label: 'Cart',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                ),
-              ],
-              currentIndex: 0, // Ubah ini sesuai dengan tab yang aktif
-              onTap: (index) {
-                // Tambahkan logika untuk berpindah tab di sini
-              },
-            )
+          ? CustomBottomNavigationBar()
           : null,
     );
   }
