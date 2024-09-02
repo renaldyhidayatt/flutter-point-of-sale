@@ -54,6 +54,7 @@ class _ContentProfileState extends State<ContentProfile> {
                 flex: 4,
                 child: SingleChildScrollView(
                   child: Card(
+                    color: Colors.white,
                     elevation: 4,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),

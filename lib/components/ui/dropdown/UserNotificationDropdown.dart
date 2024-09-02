@@ -4,10 +4,13 @@ class UserDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
+      color: Colors.white,
       icon: CircleAvatar(
-        backgroundImage: AssetImage('assets/luffy.jpg'), // Ganti dengan gambar lokal
+        backgroundImage:
+            AssetImage('assets/luffy.jpg'), // Ganti dengan gambar lokal
         radius: 20, // Sesuaikan ukuran avatar
-        backgroundColor: Colors.transparent, // Menyembunyikan latar belakang default
+        backgroundColor:
+            Colors.transparent, // Menyembunyikan latar belakang default
         // Gunakan fit untuk mengatur cara gambar ditampilkan di avatar
         child: ClipOval(
           child: Image.asset(
@@ -32,7 +35,8 @@ class UserDropdown extends StatelessWidget {
         const PopupMenuItem<int>(
           value: 1,
           child: ListTile(
-            leading: Icon(Icons.settings, color: Color.fromARGB(255, 37, 37, 37)),
+            leading:
+                Icon(Icons.settings, color: Color.fromARGB(255, 37, 37, 37)),
             title: Text('Settings'),
           ),
         ),
@@ -56,7 +60,8 @@ class UserDropdown extends StatelessWidget {
         _showAlertDialog('Settings page is not implemented yet.', context);
         break;
       case 2:
-        _showAlertDialog('Do you want to logout?', context, onLogoutConfirmed: () {
+        _showAlertDialog('Do you want to logout?', context,
+            onLogoutConfirmed: () {
           Navigator.pushReplacementNamed(context, '/login');
         });
         break;
@@ -65,7 +70,8 @@ class UserDropdown extends StatelessWidget {
     }
   }
 
-  void _showAlertDialog(String message, BuildContext context, {VoidCallback? onLogoutConfirmed}) {
+  void _showAlertDialog(String message, BuildContext context,
+      {VoidCallback? onLogoutConfirmed}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

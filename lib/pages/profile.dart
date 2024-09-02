@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/pages/profile/ContentProfile.dart';
 import 'package:flutter_application_1/components/ui/dropdown/NotificationDropdown.dart';
 import 'package:flutter_application_1/components/ui/dropdown/UserNotificationDropdown.dart';
-import 'package:flutter_application_1/components/pages/pos/Content.dart';
 import 'package:flutter_application_1/components/ui/layout/Footer.dart';
 import 'package:flutter_application_1/components/ui/layout/Header.dart';
+import 'package:flutter_application_1/components/ui/navigation/BottomNavigation.dart';
 import 'package:flutter_application_1/components/ui/navigation/Drawer.dart';
 import 'package:flutter_application_1/components/ui/navigation/Sidebar.dart';
 
@@ -64,31 +64,7 @@ class _ProfileScreeenState extends State<ProfileScreen> {
         ],
       ),
       bottomNavigationBar: isMobile || isTablet
-        ? BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard, color: Colors.black),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.folder, color: Colors.black),
-                label: 'Projects',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.analytics, color: Colors.black),
-                label: 'Analytics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.payment, color: Colors.black),
-                label: 'POS',
-              ),
-            ],
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.black,
-            onTap: (index) {
-            
-            },
-          )
+        ? CustomBottomNavigationBar()
         : null,
     );
   }

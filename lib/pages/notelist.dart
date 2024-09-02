@@ -5,6 +5,7 @@ import 'package:flutter_application_1/components/ui/dropdown/UserNotificationDro
 
 import 'package:flutter_application_1/components/ui/layout/Footer.dart';
 import 'package:flutter_application_1/components/ui/layout/Header.dart';
+import 'package:flutter_application_1/components/ui/navigation/BottomNavigation.dart';
 import 'package:flutter_application_1/components/ui/navigation/Drawer.dart';
 import 'package:flutter_application_1/components/ui/navigation/Sidebar.dart';
 
@@ -64,31 +65,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
         ],
       ),
       bottomNavigationBar: isMobile || isTablet
-        ? BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard, color: Colors.black),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.folder, color: Colors.black),
-                label: 'Projects',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.analytics, color: Colors.black),
-                label: 'Analytics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.payment, color: Colors.black),
-                label: 'POS',
-              ),
-            ],
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.black,
-            onTap: (index) {
-            
-            },
-          )
+        ? CustomBottomNavigationBar()
         : null,
     );
   }

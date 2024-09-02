@@ -58,7 +58,17 @@ class _SidebarState extends State<Sidebar> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.isSidebarExpanded ? 250 : 70,
-      color: Colors.blueAccent,
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2), // Color of the shadow
+            spreadRadius: 2, // Spread radius
+            blurRadius: 8, // Blur radius
+            offset: Offset(2, 2), // Offset in X and Y direction
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

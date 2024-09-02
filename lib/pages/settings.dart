@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/pages/settings/ContentSettings.dart';
 import 'package:flutter_application_1/components/ui/dropdown/NotificationDropdown.dart';
 import 'package:flutter_application_1/components/ui/dropdown/UserNotificationDropdown.dart';
-import 'package:flutter_application_1/components/pages/pos/Content.dart';
+
 import 'package:flutter_application_1/components/ui/layout/Footer.dart';
 import 'package:flutter_application_1/components/ui/layout/Header.dart';
 import 'package:flutter_application_1/components/ui/navigation/BottomNavigation.dart';
 import 'package:flutter_application_1/components/ui/navigation/Drawer.dart';
 import 'package:flutter_application_1/components/ui/navigation/Sidebar.dart';
 
-class PointOfSaleScreen extends StatefulWidget {
+class SettingsScreen extends StatefulWidget {
   @override
-  _PointOfSaleScreenState createState() => _PointOfSaleScreenState();
+  _SettingScreeenState createState() => _SettingScreeenState();
 }
 
-class _PointOfSaleScreenState extends State<PointOfSaleScreen> {
+class _SettingScreeenState extends State<SettingsScreen> {
   bool isSidebarExpanded = false;
   bool isHovered = false;
 
-  @override
+@override
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width < 600;
     bool isTablet = MediaQuery.of(context).size.width >= 600 &&
@@ -34,32 +35,28 @@ class _PointOfSaleScreenState extends State<PointOfSaleScreen> {
                 NotificationDropdown(),
                 UserDropdown(),
               ],
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
             )
           : null,
-      drawer: isMobile || isTablet ? CustomDrawer() : null,
+      drawer: isMobile || isTablet
+          ? CustomDrawer()
+          : null,
       body: Row(
         children: [
           if (isDesktop || isLargeDesktop)
-            Sidebar(
-              isSidebarExpanded: isSidebarExpanded,
-              onToggle: () {
-                setState(() {
-                  isSidebarExpanded = !isSidebarExpanded;
-                });
-              },
-            ),
+           Sidebar(
+            isSidebarExpanded: isSidebarExpanded,
+            onToggle: () {
+              setState(() {
+                isSidebarExpanded = !isSidebarExpanded;
+              });
+            },
+          ),
           Expanded(
             child: Column(
               children: [
                 if (isDesktop || isLargeDesktop) Header(),
                 Expanded(
-                  child: Content(
-                    isTablet: isTablet,
-                    isDesktop: isDesktop,
-                    isLargeDesktop: isLargeDesktop,
-                  ),
+                  child: ContentSettings(isMobile: isMobile),
                 ),
                 Footer(),
               ],
@@ -68,8 +65,8 @@ class _PointOfSaleScreenState extends State<PointOfSaleScreen> {
         ],
       ),
       bottomNavigationBar: isMobile || isTablet
-          ? CustomBottomNavigationBar()
-          : null,
+        ? CustomBottomNavigationBar()
+        : null,
     );
   }
-}
+ }

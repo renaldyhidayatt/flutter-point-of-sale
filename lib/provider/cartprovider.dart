@@ -19,14 +19,19 @@ class CartProvider with ChangeNotifier {
   }
 
   void addToCart(Map<String, dynamic> product) {
-    final index = _cartItems.indexWhere((item) => item['product'] == product);
+    // Cari item di cart berdasarkan ID produk
+    final index = _cartItems.indexWhere((item) => item['product']['id'] == product['id']);
+    
     if (index == -1) {
+      // Jika produk belum ada di cart, tambahkan sebagai item baru
       _cartItems.add({'product': product, 'quantity': 1});
     } else {
+      // Jika produk sudah ada di cart, tambah quantity-nya saja
       _cartItems[index]['quantity'] += 1;
     }
     notifyListeners();
-  }
+}
+
 
   void updateQuantity(Map<String, dynamic> product, int newQuantity) {
     final index = _cartItems.indexWhere((item) => item['product'] == product);

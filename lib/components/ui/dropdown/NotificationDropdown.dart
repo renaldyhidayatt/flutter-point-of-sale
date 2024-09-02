@@ -4,6 +4,7 @@ class NotificationDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
+      color: Colors.white,
       icon: const Icon(Icons.notifications, color: Color.fromARGB(255, 37, 37, 37)),
       itemBuilder: (context) => [
         PopupMenuItem<int>(

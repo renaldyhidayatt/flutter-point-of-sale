@@ -8,6 +8,7 @@ import 'package:flutter_application_1/pages/notelist.dart';
 import 'package:flutter_application_1/pages/pointofsale.dart';
 import 'package:flutter_application_1/pages/profile.dart';
 import 'package:flutter_application_1/pages/purchaseHistory.dart';
+import 'package:flutter_application_1/pages/settings.dart';
 import 'package:flutter_application_1/pages/splashscreen.dart';
 import 'package:flutter_application_1/provider/cartprovider.dart';
 import 'package:provider/provider.dart'; // Import splash screen
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => DashboardScreen(),
         '/notes': (context) => NoteListScreen(),
         '/purchase': (context) => PurchaseHistoryPage(),
+        '/settings': (context) => SettingsScreen()
       },
     );
   }
