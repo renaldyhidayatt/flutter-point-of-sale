@@ -5,8 +5,8 @@ import 'package:flutter_application_1/components/ui/dropdown/UserNotificationDro
 
 import 'package:flutter_application_1/components/ui/layout/Footer.dart';
 import 'package:flutter_application_1/components/ui/layout/Header.dart';
-import 'package:flutter_application_1/components/ui/sidebar/Drawer.dart';
-import 'package:flutter_application_1/components/ui/sidebar/Sidebar.dart';
+import 'package:flutter_application_1/components/ui/navigation/Drawer.dart';
+import 'package:flutter_application_1/components/ui/navigation/Sidebar.dart';
 
 class NoteListScreen extends StatefulWidget {
   @override
