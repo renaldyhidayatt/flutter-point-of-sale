@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
               RotationTransition(
                 turns: _spinnerAnimation,
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF5AE16)),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
                   strokeWidth: 4,
                 ),
               ),
