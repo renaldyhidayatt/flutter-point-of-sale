@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter_application_1/pages/helloworld.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -8,35 +7,39 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+  late AnimationController _spinnerController;
+  late AnimationController _textController;
+  late Animation<double> _spinnerAnimation;
+  late Animation<int> _textAnimation;
   double _opacity = 1;
 
   @override
   void initState() {
     super.initState();
     // Animation for the spinner rotation
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1))
-          ..repeat();
-    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+    _spinnerController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat();
+    _spinnerAnimation = Tween(begin: 0.0, end: 1.0).animate(_spinnerController);
+
+    // Animation for the loading text
+    _textController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    )..repeat();
+    _textAnimation = IntTween(begin: 0, end: 3).animate(_textController);
 
     // Timer to navigate after 3 seconds
     Timer(const Duration(seconds: 3), () {
       setState(() {
-        // Set opacity to 0
         _opacity = 0;
       });
-      // Wait for animation to complete before navigating
       Future.delayed(const Duration(milliseconds: 500), () {
-        // Navigate to the next screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  HelloWorldPage()), // Replace with your next screen
+          MaterialPageRoute(builder: (context) => HelloWorldPage()),
         );
       });
     });
@@ -44,7 +47,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _spinnerController.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -55,51 +59,20 @@ class _SplashScreenState extends State<SplashScreen>
         opacity: _opacity,
         duration: const Duration(milliseconds: 500),
         child: Center(
-          child: Stack(
-            alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlutterLogo(
-                    size:
-                        200, // Ukuran logo sama seperti width yang diatur sebelumnya
-                  ),
-
-                  // Logo
-                  // Image.asset(
-                  //   'assets/enggrang.png', // Replace with your logo path
-                  //   width: 200,
-                  // ),
-                  const SizedBox(height: 20),
-                  // Spinner
-                  RotationTransition(
-                    turns: _animation,
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: Color(0xFFF5AE16), width: 8),
-                          right: BorderSide(
-                              color: const Color.fromRGBO(255, 238, 0, 0.2),
-                              width: 8),
-                          bottom: BorderSide(
-                              color: const Color.fromRGBO(255, 238, 0, 0.2),
-                              width: 8),
-                          left: BorderSide(
-                              color: const Color.fromRGBO(255, 238, 0, 0.2),
-                              width: 8),
-                        ),
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  // Loading text
-                  _buildLoadingText(),
-                ],
+              FlutterLogo(size: 200),
+              const SizedBox(height: 20),
+              RotationTransition(
+                turns: _spinnerAnimation,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF5AE16)),
+                  strokeWidth: 4,
+                ),
               ),
+              const SizedBox(height: 20),
+              _buildLoadingText(),
             ],
           ),
         ),
@@ -107,18 +80,18 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 
-  // Build loading text with animation
   Widget _buildLoadingText() {
-    return AnimatedOpacity(
-      opacity: _opacity,
-      duration: const Duration(milliseconds: 1000),
-      child: Text(
-        'Loading...',
-        style: const TextStyle(
-          fontSize: 24,
-          color: Colors.black,
-        ),
-      ),
+    return AnimatedBuilder(
+      animation: _textAnimation,
+      builder: (BuildContext context, Widget? child) {
+        return Text(
+          'Loading' + '.' * (_textAnimation.value),
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.black,
+          ),
+        );
+      },
     );
   }
 }

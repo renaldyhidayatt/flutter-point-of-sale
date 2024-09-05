@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class PurchaseHistoryPage extends StatefulWidget {
   final double discount;
 
-  const PurchaseHistoryPage({
+   PurchaseHistoryPage({
     Key? key,
     this.discount = 10.0, // Default discount
   }) : super(key: key);

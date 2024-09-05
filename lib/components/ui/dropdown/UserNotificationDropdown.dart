@@ -7,7 +7,7 @@ class UserDropdown extends StatelessWidget {
       color: Colors.white,
       icon: CircleAvatar(
         backgroundImage:
-            AssetImage('assets/luffy.jpg'), // Ganti dengan gambar lokal
+            AssetImage('assets/luffy.jpg'),
         radius: 20, // Sesuaikan ukuran avatar
         backgroundColor:
             Colors.transparent, // Menyembunyikan latar belakang default
